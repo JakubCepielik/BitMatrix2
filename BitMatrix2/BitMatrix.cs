@@ -26,8 +26,90 @@ namespace BitMatrix2
             NumberOfColumns = numberOfColumns;
         }
 
+        public BitMatrix(int numberOfRows, int numberOfColumns, params int[] bits) 
+        {
+            data = new BitArray(numberOfRows * numberOfColumns);
+            if (bits != null && bits.Length != 0)
+            {
+                for (int i = 0; i < numberOfRows * numberOfColumns; i++)
+                {
+                    if (bits.Length > i)
+                    {
+                        data[i] = BitToBool(bits[i]);
+                    }
+                    else
+                    {
+                        data[i] = BitToBool(0);
+                    }
+
+                }
+                NumberOfRows = numberOfRows;
+                NumberOfColumns = numberOfColumns;
+            }
+            else
+            {
+                for (int i = 0; i < numberOfRows * numberOfColumns; i++)
+                {
+                    data[i] = BitToBool(0);
+                }
+                NumberOfRows = numberOfRows;
+                NumberOfColumns = numberOfColumns;
+            }
+
+        }
+
+        public BitMatrix(int[,] bits)
+        {
+            if (bits is null)
+            {
+                throw new NullReferenceException(nameof(bits));
+            }
+            else if(bits.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                data = new BitArray(bits.Length);
+                NumberOfRows = bits.GetLength(0);
+                NumberOfColumns = bits.GetLength(1);
+                int a = 0;
+                foreach(int i in bits)
+                {
+                    data[a] = BitToBool(i);
+                    a++;
+                }
+            }
+        }
+
+        public BitMatrix(bool[,] bits)
+        {
+            if (bits is null)
+            {
+                throw new NullReferenceException(nameof(bits));
+            }
+            else if (bits.Length == 0)
+            {
+                throw new ArgumentOutOfRangeException();
+            }
+            else
+            {
+                data = new BitArray(bits.Length);
+                NumberOfRows = bits.GetLength(0);
+                NumberOfColumns = bits.GetLength(1);
+                int a = 0;
+                foreach (bool i in bits)
+                {
+                    data[a] = i;
+                    a++;
+                }
+            }
+        }
+
         public static int BoolToBit(bool boolValue) => boolValue ? 1 : 0;
         public static bool BitToBool(int bit) => bit != 0;
+
+        #region ToString
         public override string ToString()
         {
             string wyswietl = "";
@@ -43,9 +125,12 @@ namespace BitMatrix2
             }
             return wyswietl;
         }
+        #endregion
+
+
     }
 
 
-    
+
 
 }
