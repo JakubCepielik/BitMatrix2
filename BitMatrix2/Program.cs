@@ -1,12 +1,15 @@
 ﻿using BitMatrix2;
 
-BitMatrix m;
-string s = "";
-if (BitMatrix.TryParse(s,out m))
-{
-    Console.WriteLine(m.NumberOfRows);
-    Console.WriteLine(m.NumberOfColumns);
-    Console.WriteLine(m);
 
-}
-Console.WriteLine(BitMatrix.TryParse(s, out m));
+// konwersja jawna z `bool[,]` na `BitMatrix`
+// dane poprawne
+string s = @"011
+101
+";
+bool[,] a = new bool[,] {
+{ false, true, true },
+{ true, false, true } };
+var m = (BitMatrix)a;
+Console.WriteLine(2 == m.NumberOfRows);
+Console.WriteLine(3 == m.NumberOfColumns);
+Console.WriteLine(s == m.ToString());
